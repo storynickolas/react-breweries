@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { Input, Text, Select, Button, ButtonGroup, Heading, Box } from '@chakra-ui/react'
+import { Input, Text, Select, Button, Grid, Heading, Box, List, ListItem, GridItem, AbsoluteCenter } from '@chakra-ui/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import MapBox from './Components/Map';
 
@@ -122,17 +122,34 @@ function App() {
         </Box>
 
       </header>
-      <MapBox location={location}></MapBox>
+      <Grid  templateColumns='repeat(5, 1fr)' minChildWidth='100px'>
+        <GridItem colSpan={4} padding={'20px'} bg='grey'>
 
+      <MapBox location={location} ></MapBox>
+
+      </GridItem>
+      <GridItem colSpan={1} bg='grey' >
+        {breweries[0] ?
+          <Box position='relative' h='100%'>
+            <AbsoluteCenter bg='tomato' color='white' axis='both' w='100%'>
+              <Text fontSize='2xl' href={breweries[0].website_url}>{breweries[0].name}</Text>
+              <Text>{breweries[0].street}</Text>
+              <Text>{breweries[0].city}, {breweries[0].state} {breweries[0].postal_code.substr(0, 5)}</Text>
+          </AbsoluteCenter></Box>: '' }
+</GridItem>
+         
+</Grid>
+  <List minH='30vh'>
         {breweries.map((item) => 
-          <div key={item.id} className="card" >
+          <ListItem key={item.id}  bg='tomato' border='1px' color='white' borderColor='grey'>
             <h2>{item.name}</h2>
-            <div>
+            {/* <div>
               <a href={item.website_url}>{item.name}</a>
               <p>{item.street}</p>
               <p>{item.city}, {item.state} {item.postal_code.substr(0, 5)}</p>
-            </div>
-          </div>)}
+            </div> */}
+          </ListItem>)}
+          </List>
     </div>
     </ChakraProvider>
   );

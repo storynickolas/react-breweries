@@ -18,7 +18,7 @@ function MapBox({location}) {
 
   return (
     <MapContainer center={[location[0].latitude, location[0].longitude]} zoom={10} scrollWheelZoom={false}>
-      <ChangeView center={[location[0].latitude, location[0].longitude]} zoom={4} />
+      <ChangeView center={[location[0].latitude, location[0].longitude]} zoom={10} />
     <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

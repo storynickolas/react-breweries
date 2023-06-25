@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { Input, Text, Select, Button, Grid, Heading, Box, List, ListItem, GridItem, AbsoluteCenter } from '@chakra-ui/react'
+import { Input, Text, Select, Button, Grid, Heading, Box, List, ListItem, GridItem, Center } from '@chakra-ui/react'
 import { ChakraProvider } from '@chakra-ui/react'
 import MapBox from './Components/Map';
 
@@ -116,32 +116,32 @@ function App() {
           </Box>
           
         </form>
-        <Box display='flex' alignItems='center' gap="4">
-          <Button bg='tomato' onClick={previous} className="button-1">Previous</Button>
-          <Button bg='tomato' onClick={next} className="button-1">Next</Button>
-        </Box>
 
       </header>
-      <Grid  templateColumns='repeat(5, 1fr)' minChildWidth='100px'>
-        <GridItem colSpan={4} padding={'20px'} bg='grey'>
+      <Grid  templateColumns='repeat(5, 1fr)' templateRows='repeat(2, 1fr)' maxH='80vh'>
+        <GridItem colSpan={4} padding={'20px'}  bg='#282c34' >
 
       <MapBox location={location} ></MapBox>
 
       </GridItem>
-      <GridItem colSpan={1} bg='grey' >
+      <GridItem colSpan={1} bg='#282c34'>
+        <Box h='20px'></Box>
+      <Box position='relative' >
         {breweries[0] ?
-          <Box position='relative' h='100%'>
-            <AbsoluteCenter bg='tomato' color='white' axis='both' w='100%'>
+  
+            <Box bg='tomato' color='white' axis='both' w='100%'>
               <Text fontSize='2xl' href={breweries[0].website_url}>{breweries[0].name}</Text>
               <Text>{breweries[0].street}</Text>
               <Text>{breweries[0].city}, {breweries[0].state} {breweries[0].postal_code.substr(0, 5)}</Text>
-          </AbsoluteCenter></Box>: '' }
-</GridItem>
+          </Box>: '' }
+          <Box display='relative' alignItems='center' gap="4" bg='grey'>
+          <Button variant='solid' colorScheme='whiteAlpha' onClick={previous} className="button-1">Previous</Button>
+          <Button variant='solid' colorScheme='whiteAlpha' onClick={next} className="button-1">Next</Button>
          
-</Grid>
-  <List minH='30vh'>
+          </Box>
+  <List maxH={'60vh'} overflowY={'scroll'}>
         {breweries.map((item) => 
-          <ListItem key={item.id}  bg='tomato' border='1px' color='white' borderColor='grey'>
+          <ListItem key={item.id}  bg='white' border='1px' color='black' borderColor='grey'>
             <h2>{item.name}</h2>
             {/* <div>
               <a href={item.website_url}>{item.name}</a>
@@ -150,6 +150,11 @@ function App() {
             </div> */}
           </ListItem>)}
           </List>
+          </Box>
+         
+</GridItem>
+         
+</Grid>
     </div>
     </ChakraProvider>
   );

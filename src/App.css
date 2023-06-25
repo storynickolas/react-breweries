@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: tomato;
 }
 
 .App-logo {
@@ -15,7 +16,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,4 +36,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.leaflet-container {
+  width: 100wh; 
+  height: 30em;
 }

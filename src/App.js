@@ -6,8 +6,7 @@ import MapBox from './Components/Map';
 
 function App() {
   const [city, setCity] = useState('')
-  const [search, setSearch] = useState('')
-  const [state, setState] = useState('')
+  const [state, setState] = useState('Alabama')
   const [page, setPage] = useState(1)
   const [breweries, setBreweries] = useState([])
   const [location, setLocation] = useState([{latitude: 39.8283, 
@@ -19,6 +18,8 @@ function App() {
   
   const [start, setStart] = useState(true)
   const [more, setMore] = useState(false)
+
+  const [rat, setRat] = useState(0)
     
 useEffect(() => {
   if(page === 1) {
@@ -30,10 +31,6 @@ useEffect(() => {
 }, [page])
 
 
-  const position = [39.8283, -98.5795]
-  // let defaultMap = [39.8283, -98.5795, 4]
-  // resetMap(defaultMap[0], defaultMap[1], defaultMap[2])
-
   const states = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado',
     'Connecticut','Delaware','District of Columbia','Florida','Georgia','Hawaii','Idaho',
     'Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts'
@@ -42,30 +39,23 @@ useEffect(() => {
     'Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont',
     'Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 
-  function getBreweries() {
-    if(breweries.length === 0) {
-      fetch(`https://api.openbrewerydb.org/breweries`)
-      .then((response) => response.json())
-      .then((data) => {
-        setBreweries(data)
-      });
-    }
-    else
-    {
+  const cities = ['', 'san_diego', 'portland', 'asheville', 'grand_rapids', 'boulder', 'jacksonville', 'houston']
+
+  function getBreweries(e) {
+    e.preventDefault()
       fetch(`https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}&per_page=9&page=${page}`)
       .then((response) => response.json())
       .then((data) => {
-        if(data.length !== 0){
+        if(data.ok){
           setBreweries(data)
           addGeo(data)
           setMore(false)
         }
         else {
+
           setMore(true)
         }
-     
       });
-    }
   }
   
   function addGeo(data) {
@@ -82,26 +72,30 @@ useEffect(() => {
   }
 
   useEffect(() => {
-    getBreweries()
-  }, [city, page]);
+    if(rat === 0) {
+      let cow = Math.floor(Math.random()*7 + 1)
+      fetch(`https://api.openbrewerydb.org/v1/breweries?by_city=${cities[cow]}&per_page=3`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        addGeo(data)
+        setBreweries(data)
+        setMore(true)
+        setStart(true)
+      });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    let newCity = search
-    setCity(newCity)
-  }
-
-  function handleChange(e) {
-    e.preventDefault();
-    let newCity = e.target.value
-    setSearch(newCity)
-  }
-
-  function handleSelect(e) {
-    e.preventDefault();
-    let newState = e.target.value
-    setState(newState)
-  }
+    }
+    else {
+    fetch(`https://api.openbrewerydb.org/v1/breweries?by_city=${cities[rat]}&per_page=3`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        addGeo(data)
+        setBreweries(data)
+        setMore(true)
+        setStart(true)
+      });}
+  }, [rat])
 
   function next() {
     let newpage = page + 1
@@ -119,10 +113,10 @@ useEffect(() => {
     <div className="App">
       <header className="App-header">
         <Heading size="4xl" >Brewery Locator</Heading>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => getBreweries(e)}>
           <Box display='flex' alignItems='center' gap="4" padding='4'>
-            <Input type="text" bg='tomato' onChange={handleChange} size='lg' placeholder="City..." variant='outline'/>
-            <Select size="lg" id="states" variant="outline" bg='tomato' onChange={handleSelect}>
+            <Input type="text" bg='tomato' onChange={(e) => setCity(e.target.value)} size='lg' placeholder="City..." variant='outline'/>
+            <Select size="lg" id="states" variant="outline" bg='tomato' onChange={(e) => setState(e.target.value)}>
               {
                 states.map(abrev => {
                   return (
@@ -131,7 +125,7 @@ useEffect(() => {
               })
             }
             </Select>
-            <Button variant='solid' size="lg" bg='tomato' onClick={handleSubmit}>Search</Button>
+            <Button variant='solid' size="lg" bg='tomato' onClick={(e) => getBreweries(e)}>Search</Button>
           </Box>
           
         </form>
@@ -146,6 +140,7 @@ useEffect(() => {
       <GridItem colSpan={1} bg='#282c34'>
         <Box h='20px'></Box>
       <Box position='relative' >
+      <Button variant='solid' size="lg" bg='tomato' onClick={() => setRat(Math.floor(Math.random()*7 + 1))}>Random City</Button>
         {breweries[0] ?
   
             <Box bg='tomato' color='white' axis='both' w='100%'>

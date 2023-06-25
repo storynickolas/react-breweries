@@ -15,7 +15,19 @@ function App() {
   // const [geo, setGeo] = useState([])
 
   let geo = []
+
+  
+  const [start, setStart] = useState(true)
+  const [more, setMore] = useState(false)
     
+useEffect(() => {
+  if(page === 1) {
+    setStart(true)
+  }
+  else {
+    setStart(false)
+  }
+}, [page])
 
 
   const position = [39.8283, -98.5795]
@@ -40,11 +52,18 @@ function App() {
     }
     else
     {
-      fetch(`https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}&per_page=7&page=${page}`)
+      fetch(`https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}&per_page=9&page=${page}`)
       .then((response) => response.json())
       .then((data) => {
-        setBreweries(data)
-        addGeo(data)
+        if(data.length !== 0){
+          setBreweries(data)
+          addGeo(data)
+          setMore(false)
+        }
+        else {
+          setMore(true)
+        }
+     
       });
     }
   }
@@ -135,8 +154,8 @@ function App() {
               <Text>{breweries[0].city}, {breweries[0].state} {breweries[0].postal_code.substr(0, 5)}</Text>
           </Box>: '' }
           <Box display='relative' alignItems='center' gap="4" bg='grey'>
-          <Button variant='solid' colorScheme='whiteAlpha' onClick={previous} className="button-1">Previous</Button>
-          <Button variant='solid' colorScheme='whiteAlpha' onClick={next} className="button-1">Next</Button>
+          <Button isDisabled={start} variant='solid' colorScheme='whiteAlpha' onClick={previous} className="button-1">Previous</Button>
+          <Button isDisabled={more} variant='solid' colorScheme='whiteAlpha' onClick={next} className="button-1">Next</Button>
          
           </Box>
   <List maxH={'60vh'} overflowY={'scroll'}>

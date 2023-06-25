@@ -60,6 +60,7 @@ useEffect(() => {
           setBreweries(data)
           addGeo(data)
           setMore(false)
+          setSelected(data[0])
         }
         else {
           setMissing(true)
@@ -112,6 +113,7 @@ useEffect(() => {
         setMissing(false)
         setMore(true)
         setStart(true)
+        setSelected(data[0])
       });}
   }, [rat])
 
@@ -145,13 +147,18 @@ useEffect(() => {
               })
             }
             </Select>
-            <Button variant='solid' size="lg" bg='tomato' onClick={(e) => getBreweries(e)}>Search</Button>
+            <Button width='100%' variant='solid' size="lg" bg='tomato' onClick={(e) => getBreweries(e)}>Search</Button>
+            <Text>Or</Text>
+            <Button width='100%' variant='solid' size="lg" bg='tomato' onClick={() => setRat(Math.floor(Math.random()*7 + 1))}>Random City</Button>
+          
           </Box>
           
         </form>
 
       </header>
-      <Grid  templateColumns='repeat(5, 1fr)' templateRows='repeat(2, 1fr)' maxH='80vh'>
+      <Text fontSize={'3xl'}>{selected.city}, {selected.state}</Text>
+      <Grid  templateColumns='repeat(5, 1fr)' templateRows='repeat(2, 1fr)' maxH='60vh'>
+
         <GridItem colSpan={4} padding={'20px'}  bg='#282c34' >
 
       <MapBox location={location} setSelected={setSelected} ></MapBox>
@@ -160,7 +167,6 @@ useEffect(() => {
       <GridItem colSpan={1} bg='#282c34'>
         <Box h='20px'></Box>
       <Box position='relative' >
-      <Button variant='solid' size="lg" bg='tomato' onClick={() => setRat(Math.floor(Math.random()*7 + 1))}>Random City</Button>
         {missing ? 
         <Box bg='tomato' color='white' axis='both' w='100%'>
           <Text fontSize='2xl' >Cannot Locate City Try Again</Text>
@@ -180,7 +186,7 @@ useEffect(() => {
           </Box>}
 
           {missing ? '' :
-  <List maxH={'60vh'} overflowY={'scroll'}>
+  <List maxH={'50vh'} overflowY={'scroll'}>
         {breweries.map((item) => 
           <ListItem key={item.id}  bg='white' border='1px' color='black' borderColor='grey'>
             <h2>{item.name}</h2>

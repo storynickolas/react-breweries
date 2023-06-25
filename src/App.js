@@ -9,9 +9,12 @@ function App() {
   const [state, setState] = useState('Alabama')
   const [page, setPage] = useState(1)
   const [breweries, setBreweries] = useState([])
+  const [missing, setMissing] = useState(true)
   const [location, setLocation] = useState([{latitude: 39.8283, 
     longitude: -98.5795}])
   // const [geo, setGeo] = useState([])
+
+  const [selected, setSelected] = useState({})
 
   let geo = []
 
@@ -43,16 +46,23 @@ useEffect(() => {
 
   function getBreweries(e) {
     e.preventDefault()
-      fetch(`https://api.openbrewerydb.org/breweries?by_city=${city}&by_state=${state}&per_page=9&page=${page}`)
+    console.log(state)
+    console.log(city)
+    let fish = city
+    fish = fish.split(' ').join('_')
+    console.log(fish)
+      fetch(`https://api.openbrewerydb.org/breweries?by_city=${fish}&by_state=${state}&per_page=9&page=${page}`)
       .then((response) => response.json())
       .then((data) => {
-        if(data.ok){
+        if(data.length !== 0){
+          console.log(data)
+          setMissing(false)
           setBreweries(data)
           addGeo(data)
           setMore(false)
         }
         else {
-
+          setMissing(true)
           setMore(true)
         }
       });
@@ -64,7 +74,12 @@ useEffect(() => {
         geo.push({
           name: element.name, 
           latitude: element.latitude, 
-          longitude: element.longitude
+          longitude: element.longitude,
+          phone: element.phone,
+          website: element.website_url,
+          street: element.address_1,
+          state: element.state,
+          city: element.city
         })
       }
     })
@@ -82,6 +97,8 @@ useEffect(() => {
         setBreweries(data)
         setMore(true)
         setStart(true)
+        setMissing(false)
+        setSelected(data[0])
       });
 
     }
@@ -92,6 +109,7 @@ useEffect(() => {
         console.log(data)
         addGeo(data)
         setBreweries(data)
+        setMissing(false)
         setMore(true)
         setStart(true)
       });}
@@ -113,8 +131,10 @@ useEffect(() => {
     <div className="App">
       <header className="App-header">
         <Heading size="4xl" >Brewery Locator</Heading>
+        <button onClick={() => console.log(selected)}>Click Me</button>
         <form onSubmit={(e) => getBreweries(e)}>
           <Box display='flex' alignItems='center' gap="4" padding='4'>
+            {/* <Button onClick={() => console.log(missing)}>Testing</Button> */}
             <Input type="text" bg='tomato' onChange={(e) => setCity(e.target.value)} size='lg' placeholder="City..." variant='outline'/>
             <Select size="lg" id="states" variant="outline" bg='tomato' onChange={(e) => setState(e.target.value)}>
               {
@@ -134,36 +154,38 @@ useEffect(() => {
       <Grid  templateColumns='repeat(5, 1fr)' templateRows='repeat(2, 1fr)' maxH='80vh'>
         <GridItem colSpan={4} padding={'20px'}  bg='#282c34' >
 
-      <MapBox location={location} ></MapBox>
+      <MapBox location={location} setSelected={setSelected} ></MapBox>
 
       </GridItem>
       <GridItem colSpan={1} bg='#282c34'>
         <Box h='20px'></Box>
       <Box position='relative' >
       <Button variant='solid' size="lg" bg='tomato' onClick={() => setRat(Math.floor(Math.random()*7 + 1))}>Random City</Button>
-        {breweries[0] ?
+        {missing ? 
+        <Box bg='tomato' color='white' axis='both' w='100%'>
+          <Text fontSize='2xl' >Cannot Locate City Try Again</Text>
+          </Box>
+        :
   
             <Box bg='tomato' color='white' axis='both' w='100%'>
-              <Text fontSize='2xl' href={breweries[0].website_url}>{breweries[0].name}</Text>
-              <Text>{breweries[0].street}</Text>
-              <Text>{breweries[0].city}, {breweries[0].state} {breweries[0].postal_code.substr(0, 5)}</Text>
-          </Box>: '' }
+              <Text fontSize='2xl'>{selected.name}</Text>
+              <Text>{selected.street}</Text>
+              <Text>{selected.city}, {selected.state} </Text>
+          </Box>} 
+
+          {missing ? '' :
           <Box display='relative' alignItems='center' gap="4" bg='grey'>
           <Button isDisabled={start} variant='solid' colorScheme='whiteAlpha' onClick={previous} className="button-1">Previous</Button>
           <Button isDisabled={more} variant='solid' colorScheme='whiteAlpha' onClick={next} className="button-1">Next</Button>
-         
-          </Box>
+          </Box>}
+
+          {missing ? '' :
   <List maxH={'60vh'} overflowY={'scroll'}>
         {breweries.map((item) => 
           <ListItem key={item.id}  bg='white' border='1px' color='black' borderColor='grey'>
             <h2>{item.name}</h2>
-            {/* <div>
-              <a href={item.website_url}>{item.name}</a>
-              <p>{item.street}</p>
-              <p>{item.city}, {item.state} {item.postal_code.substr(0, 5)}</p>
-            </div> */}
           </ListItem>)}
-          </List>
+          </List>}
           </Box>
          
 </GridItem>

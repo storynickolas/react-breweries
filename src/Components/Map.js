@@ -5,7 +5,7 @@ import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {Icon} from 'leaflet'
 
 
-function MapBox({location}) {
+function MapBox({location, setSelected}) {
 
 
 
@@ -25,7 +25,13 @@ function MapBox({location}) {
       />
       {location.map(element => {
           return (<Marker key={element.latitude} position={[element.latitude, element.longitude]}
-            icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
+            icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}
+            eventHandlers={{
+              click: () => {
+                setSelected(element)
+              },
+            }}
+            >
           <Popup>
             {element.name}
           </Popup>
@@ -37,3 +43,22 @@ function MapBox({location}) {
 }
 
 export default MapBox;
+
+
+  //  geo.forEach(element => {
+  //     let nMarker = L.marker([element.latitude, element.longitude]).addEventListener('click', () => {
+  //       let arr = [...document.getElementsByClassName('brew123')]
+  //       arr.forEach( element =>
+  //         element.style.backgroundColor = 'white'
+  //       )
+  //       document.getElementById(element.name).style.backgroundColor = 'rgb(192,192,192)'
+  //     })
+  //     nMarker.bindPopup(element.name);
+  //     nMarker.addEventListener('mouseover', function (e) {
+  //         this.openPopup();
+  //     });
+  //     nMarker.addEventListener('mouseout', function (e) {
+  //         this.closePopup();
+  //     });
+  //     nMarker.addTo(map)
+  //   })

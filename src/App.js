@@ -55,12 +55,7 @@ useEffect(() => {
       .then((response) => response.json())
       .then((data) => {
         if(data.length !== 0){
-          console.log(data)
-          setMissing(false)
-          setBreweries(data)
-          addGeo(data)
-          setMore(false)
-          setSelected(data[0])
+          hanldeData(data)
         }
         else {
           setMissing(true)
@@ -87,19 +82,23 @@ useEffect(() => {
     setLocation([...geo])
   }
 
+  function hanldeData(data) {
+    console.log(data)
+    addGeo(data)
+    setBreweries(data)
+    setMore(true)
+    setStart(true)
+    setMissing(false)
+    setSelected(data[0])
+  }
+
   useEffect(() => {
     if(rat === 0) {
       let cow = Math.floor(Math.random()*7 + 1)
       fetch(`https://api.openbrewerydb.org/v1/breweries?by_city=${cities[cow]}&per_page=3`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        addGeo(data)
-        setBreweries(data)
-        setMore(true)
-        setStart(true)
-        setMissing(false)
-        setSelected(data[0])
+        hanldeData(data)
       });
 
     }
@@ -107,13 +106,7 @@ useEffect(() => {
     fetch(`https://api.openbrewerydb.org/v1/breweries?by_city=${cities[rat]}&per_page=3`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
-        addGeo(data)
-        setBreweries(data)
-        setMissing(false)
-        setMore(true)
-        setStart(true)
-        setSelected(data[0])
+        hanldeData(data)
       });}
   }, [rat])
 

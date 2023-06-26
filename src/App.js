@@ -111,7 +111,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Heading size="4xl" >Brewery Locator</Heading>
-        <button onClick={() => console.log(breweries)}>Test</button>
         <form onSubmit={(e) => getBreweries(e)}>
           <Box display='flex' alignItems='center' gap="4" padding='4'>
             <Input type="text" bg='tomato' onChange={(e) => setCity(e.target.value)} size='lg' placeholder="City..." variant='outline'/>

@@ -133,7 +133,6 @@ useEffect(() => {
     <div className="App">
       <header className="App-header">
         <Heading size="4xl" >Brewery Locator</Heading>
-        <button onClick={() => console.log(selected)}>Click Me</button>
         <form onSubmit={(e) => getBreweries(e)}>
           <Box display='flex' alignItems='center' gap="4" padding='4'>
             {/* <Button onClick={() => console.log(missing)}>Testing</Button> */}
@@ -156,8 +155,8 @@ useEffect(() => {
         </form>
 
       </header>
-      <Text fontSize={'3xl'}>{selected.city}, {selected.state}</Text>
-      <Grid  templateColumns='repeat(5, 1fr)' templateRows='repeat(2, 1fr)' maxH='60vh'>
+      <Text color='white' fontSize={'3xl'}>{selected.city}, {selected.state}</Text>
+      <Grid  templateColumns='repeat(5, 1fr)' templateRows='repeat(2, 1fr)' maxH='55vh'>
 
         <GridItem colSpan={4} padding={'20px'}  bg='#282c34' >
 
@@ -188,9 +187,15 @@ useEffect(() => {
           {missing ? '' :
   <List maxH={'50vh'} overflowY={'scroll'}>
         {breweries.map((item) => 
-          <ListItem key={item.id}  bg='white' border='1px' color='black' borderColor='grey'>
+          item.name === selected.name ?
+          <ListItem key={item.id}  bg='grey' border='1px' color='white' borderColor='grey' >
             <h2>{item.name}</h2>
-          </ListItem>)}
+          </ListItem>
+          :
+          <ListItem key={item.id}  bg='white' border='1px' color='black' borderColor='grey' onClick={() => setSelected(item)}>
+            <h2>{item.name}</h2>
+          </ListItem>
+          )}
           </List>}
           </Box>
          

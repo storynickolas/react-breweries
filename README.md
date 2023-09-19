@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+![Sample Page](https://github.com/storynickolas/Workout-Plan-Creator/blob/main/src/Launch%Page.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

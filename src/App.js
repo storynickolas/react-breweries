@@ -78,6 +78,7 @@ function App() {
   }
 
   function hanldeData(data) {
+    console.log(data)
     addGeo(data)
     setBreweries(data)
     setMore(true)
@@ -112,9 +113,9 @@ function App() {
       <header className="App-header">
         <Heading size="4xl" >Brewery Locator</Heading>
         <form onSubmit={(e) => getBreweries(e)}>
-          <Box display='flex' alignItems='center' gap="4" padding='4'>
-            <Input type="text" bg='tomato' onChange={(e) => setCity(e.target.value)} size='lg' placeholder="City..." variant='outline'/>
-            <Select size="lg" id="states" variant="outline" bg='tomato' onChange={(e) => setState(e.target.value)}>
+          {breweries.length > 0 ? <Box display='flex' alignItems='center' gap="4" padding='4'>
+            <Input defaultValue={breweries[0].city} type="text" bg='tomato' onChange={(e) => setCity(e.target.value)} size='lg' placeholder="City..." variant='outline'/>
+            <Select defaultValue={breweries[0].state} size="lg" id="states" variant="outline" bg='tomato' onChange={(e) => setState(e.target.value) }>
               {
                 states.map(abrev => {
                   return (
@@ -126,10 +127,10 @@ function App() {
             <Button width='100%' variant='solid' size="lg" bg='tomato' onClick={(e) => getBreweries(e)}>Search</Button>
             <Text>Or</Text>
             <Button width='100%' variant='solid' size="lg" bg='tomato' onClick={() => randomCity(Math.floor(Math.random()*7))}>Random City</Button>
-          </Box>
+          </Box> : ' ' }
         </form>
       </header>
-      <Text color='white' fontSize={'3xl'}>{selected.city}, {selected.state}</Text>
+      {breweries.length > 0 ? <Text color='white' fontSize={'3xl'}>{selected.city}, {selected.state}</Text> : '...Loading'}
       <Grid  templateColumns='repeat(5, 1fr)' templateRows='repeat(2, 1fr)' maxH='55vh'>
         <GridItem colSpan={4} padding={'20px'}  bg='#282c34' >
           <MapBox location={location} setSelected={setSelected} ></MapBox>

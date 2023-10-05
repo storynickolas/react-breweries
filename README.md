@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 
-Test Commit
+![Sample Page](https://github.com/storynickolas/react-breweries/blob/main/src/Launch%20Page.png)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

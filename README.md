@@ -1,73 +1,33 @@
-# Getting Started with Create React App
+# Brewery Locator
 
 ![Sample Page](https://github.com/storynickolas/react-breweries/blob/main/src/Launch%20Page.png)
 
+This app uses the [Open Brewery DB](https://www.openbrewerydb.org/) api to provide the user a list of available breweries based on either a random (default) or named American city. A map of the current city was created using [LeafletJs](https://leafletjs.com/examples/geojson/).  This map shows pins of the returned breweries for the searched city.  The currently selected brewery will appear at the top of the list with the orange background.  Selecting a brewery from the list will give you additional information including: address, phone number and a link to the breweries website.  Next/previous buttons are used to navigate the list when a city has more than 9 breweries.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## How To Search
 
-## Available Scripts
+1.  Fill in the first form box with the name of the city you are searching for:
+  * Include:
+    - Spaces
+    - Capitalization optional
 
-In the project directory, you can run:
+  * Leave Out:
+    - Special characters including hyphenation
+    - numbers
 
-### `npm start`
+2. Select state or District of Columbia from drop down
+3. Hit the search button or press enter on your keyboard
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Additional Resources
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This project uses the Leaflet Javascript library to add mapping features.  For more information on Leaflet see their quick start guide here:
 
-### `npm test`
+https://leafletjs.com/examples/quick-start/
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Leaflet uses OpenStreetMap map images files as the default for their maps.  For more information on the OpenStreetMap see their about page:
 
-### `npm run build`
+https://www.openstreetmap.org/about
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Brewery data is provided using the Open Brewery DB api.  For more information on Open Brewery DB api see their quick start guide here:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://www.openbrewerydb.org/documentation

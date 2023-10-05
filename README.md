@@ -4,6 +4,8 @@
 
 This app uses the [Open Brewery DB](https://www.openbrewerydb.org/) api to provide the user a list of available breweries based on either a random (default) or named American city. A map of the current city was created using [LeafletJs](https://leafletjs.com/examples/geojson/).  This map shows pins of the returned breweries for the searched city.  The currently selected brewery will appear at the top of the list with the orange background.  Selecting a brewery from the list will give you additional information including: address, phone number and a link to the breweries website.  Next/previous buttons are used to navigate the list when a city has more than 9 breweries.
 
+This project was updated using React but was originally created in JavaScript.  Original project can be found here: https://github.com/storynickolas/Brewery-Search 
+
 ## How To Search
 
 1.  Fill in the first form box with the name of the city you are searching for:

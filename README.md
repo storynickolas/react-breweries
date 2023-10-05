@@ -20,6 +20,10 @@ This project was updated using React but was originally created in JavaScript.  
 2. Select state or District of Columbia from drop down
 3. Hit the search button or press enter on your keyboard
 
+OR
+
+To select a random city select the Random City button.
+
 ## Additional Resources
 
 This project uses the Leaflet Javascript library to add mapping features.  For more information on Leaflet see their quick start guide here:
